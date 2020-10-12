@@ -1,0 +1,37 @@
+from functools import partial
+from flask_cors import CORS
+from flask import request
+import gdown
+import flask
+import io
+import os
+​
+url = 'https://drive.google.com/a/greendeck.co/uc?id=19r_vn0vuvHpE-rJpFHvXHlMvxa8UOeom&export=download'
+​
+# Create Flask application
+app = flask.Flask(__name__)
+CORS(app)
+​
+def init_files(dump_path = 'dumps/netaporter_gb.json'):
+    if dump_path.split('/')[0] not in os.listdir():
+        os.mkdir(dump_path.split('/')[0])
+    if os.path.exists(dump_path):
+        pass
+    else:
+        gdown.download(url = url, output = dump_path, quiet=False)
+​
+def prepare_dataset(path = 'dumps/netaporter_gb.json'):
+    '''YOUR DATA PREPARATION CODE HERE'''
+    pass
+​
+# RUN FLASK APPLICATION
+if __name__ == '__main__':
+    '''MAKE SURE YOU HAVE 'gdown' LIBRARY IN YOUR 'requirements.txt' TO DOWNLOAD FILE FROM Gdrive.'''
+    # GETTING DATASET this function will download the dataset
+    init_files('dumps/netaporter_gb.json') 
+    
+    # PREPARING DATASET
+    prepare_dataset('dumps/netaporter_gb.json')
+    
+    # RUNNNING FLASK APP
+    app.run(debug=True, host = '0.0.0.0', port=5000)https
